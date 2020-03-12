@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap-switch.min.css}">
+<link rel="stylesheet" th:href="@{/css/upload.min.css}" />
+<!-- <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" /> -->
+<!-- <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap4.min.css}" /> -->
+</head>
+<body>
+	<section layout:fragment="corpo">
+		<div class="app-title">
+			<div>
+				<h1>
+					<i class="fa fa-edit"></i>Cadastro de Pessoa - Contatos
+				</h1>
+			</div>
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><i class="fa fa-search fa-lg"></i></li>
+				<li class="breadcrumb-item"><a th:href="@{/pessoa_juridica/listar}">Pesquisa
+						Pessoa Jurídica</a></li>
+			</ul>
+		</div>
+		<div class="container-fluid">
+			<div class="bs-component">
+				<div class="tile">
+					<div class="row">
+						<div class="tile-title"><b>Telefones Cadastrados para</b></div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								 <input
+									type="text" id="nome" class="form-control" name="nome"
+									th:field="*{pessoa.nome}" />
+							</div>
+						</div>
+					</div>
+					<div class="tile-body">
+						<div id="no-more-tables">
+							<table id="tabelaContato"
+								class="table col-sm-12 table-striped table-bordered table-hover table-collapse cf">
+								<thead class="cf">
+									<tr>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Id</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Tipo
+											Telefone</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Modelo
+											Telefone</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Número
+											Telefone</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Ação</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="telefone :${pessoa.telefones}">
+										<td data-title="Id" class="text-center"
+											th:text="${telefone.id}"></td>
+										<td data-title="Tipo Telefone" class="text-center"
+											th:text="${telefone.tipoTelefone}"></td>
+										<td data-title="Modelo Telefone" style="text-align: center;"
+											th:text="${telefone.modeloTelefone}"></td>
+										<td data-title="Número Telefone" class="text-center"
+											th:text="${telefone.numeroTelefone}"></td>
+										<td data-title="Ação" class="text-center"><a
+											id="editarContato" class="btn btn-info btn-sm"
+											title="Alterar dados do contato selecionado"
+											th:href="@{/telefone/{id}(id=${telefone.id})}"
+											data-toggle="modal" data-target="#editarContatoPessoa"> <i
+												class="fa fa-pencil"></i>
+										</a> <a  id="excluirContato" class="btn btn-danger btn-sm "
+											title="Excluir contato da pessoa selecionada"
+											th:href="@{/telefone/{id}(id=${telefone.id})}"
+											data-toggle="modal" data-target="#excluirContatoPessoa"> <i
+												class="fa fa-trash" ></i>
+										</a> 
+									 </td>
+									</tr>
+
+								</tbody>
+							</table>
+							<button id="newContato" class="btn btn-info btn-sm"
+								    title="Cadastrar novo contato para pessoa"
+								    th:href="@{/pessoa_fisica/novo_contato}"
+								    data-toggle="modal" data-target="#editarContatoPessoa">Novo Contato
+							  		<span class="fa fa-pencil"></span>
+							</button> 
+							<a class="btn btn-success btn-sm"
+							  title="Pesquisa de Pessoa Física"
+							  th:href="@{/pessoa_juridica/listar}">Pesquisar Pessoa Jurídica
+							  <span class="fa fa-search"></span>
+						</a> 
+						</div>
+					</div>
+					<div id="fragEditContato">
+					   <div th:replace="crm/fragments/editContato :: editar_contato"></div>
+					</div> 
+					<div id="fragExcluiContato">
+						<div th:replace="crm/fragments/excluirContato :: excluir_contato"></div>
+					</div>
+					
+				 </div>
+
+				</div>
+			</div>
+
+			
+	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/js/mascara-dados.js}"></script>
+		<script>
+		$("#newContato").on('click', function(event){
+			event.preventDefault();
+		    var href = $(this).attr('href');
+			$.ajax({
+				   method : "GET",
+				   url : href, 
+				   success : function(response){
+			       },
+				   error : function(jqXHR,textStatus, errorThrown) {
+					   alert(jqXHR.status+ ' '+ jqXHR.responseText);
+				   }
+			   });
+		});
+		$("#tabelaContato #editarContato").on('click', function(evento){
+			   event.preventDefault();
+			   var href = $(this).attr('href');
+			   $.ajax({
+				   method : "GET",
+				   url : href, 
+				   success : function(response){
+					    $('#idPessoa').val(response.pessoa.id),
+						$('#idContato').val(response.id),
+						$('#tipo_telefone').val(response.tipoTelefone),
+						$('#modelo_telefone').val(response.modeloTelefone),
+						$('#numero_telefone').val(response.numeroTelefone) 
+			       },
+				   error : function(jqXHR,textStatus, errorThrown) {
+					   alert(jqXHR.status+ ' '+ jqXHR.responseText);
+				   }
+			   }); 
+		});
+		 $("#tabelaContato #excluirContato").on('click', function(event){
+			   event.preventDefault();
+			   var href = $(this).attr('href');
+			   $.ajax({
+				   method : "GET",
+				   url : href, 
+				   success : function(response){
+					    $('#idPessoae').val(response.pessoa.id),
+						$('#idContatoe').val(response.id),
+						$('#tipotelefone').val(response.tipoTelefone),
+						$('#modelotelefone').val(response.modeloTelefone),
+						$('#numerotelefone').val(response.numeroTelefone) 
+			       },
+				   error : function(jqXHR,textStatus, errorThrown) {
+					   alert(jqXHR.status+ ' '+ jqXHR.responseText);
+				   }
+			   });
+	    });	
+	
+		</script>
+	</th:block>
+</body>
+</html>

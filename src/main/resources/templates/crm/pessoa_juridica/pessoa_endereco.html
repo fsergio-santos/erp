@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap-switch.min.css}">
+<link rel="stylesheet" th:href="@{/css/upload.min.css}" />
+<!-- <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" /> -->
+<!-- <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap4.min.css}" /> -->
+</head>
+<body>
+	<section layout:fragment="corpo">
+		<div class="app-title">
+			<div>
+				<h1>
+					<i class="fa fa-edit"></i>Cadastro de Pessoas - Endereços
+				</h1>
+			</div>
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><i class="fa fa-search fa-lg"></i></li>
+				<li class="breadcrumb-item"><a th:href="@{/pessoa_juridica/listar}">Pesquisa
+						Pessoa Jurídica</a></li>
+			</ul>
+		</div>
+		<div class="container-fluid">
+			<div class="bs-component">
+			  <div class="tile">
+				<h4 class="tile-title">Endereços Cadastrados</h4>
+				<div class="tile-body">
+					<div id="no-more-tables">
+						<table id="tabelaEndereco"
+							class="table col-sm-12 table-striped table-bordered table-hover table-collapse cf">
+							<thead class="cf">
+								<tr>
+									<th class="p-3 mb-2 bg-primary text-white"
+										style="font-weight: bold; text-align: center;">Id</th>
+									<th class="p-3 mb-2 bg-primary text-white"
+										style="font-weight: bold; text-align: center;">Cidade</th>
+									<th class="p-3 mb-2 bg-primary text-white"
+										style="font-weight: bold; text-align: center;">Rua</th>
+									<th class="p-3 mb-2 bg-primary text-white"
+										style="font-weight: bold; text-align: center;">Número</th>
+									<th class="p-3 mb-2 bg-primary text-white"
+										style="font-weight: bold; text-align: center;">Tipo
+										Endereço</th>
+									<th class="p-3 mb-2 bg-primary text-white"
+										style="font-weight: bold; text-align: center;">Ação</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="endereco :${pessoa.enderecos}">
+									<td data-title="Id" class="text-center"
+										th:text="${endereco.id}"></td>
+									<td data-title="Cidade" class="text-center"
+										th:text="${endereco.cidade.nome}"></td>
+									<td data-title="Rua" style="text-align: center;"
+										th:text="${endereco.logradouro.descricao}"></td>
+									<td data-title="Número" class="text-center"
+										th:text="${endereco.numero}"></td>
+									<td data-title="Tipo Endereço" class="text-center"
+										th:text="${endereco.tipoEndereco}"></td>
+									<td data-title="Ação" class="text-center">
+										<a id="updateEndereco" class="btn btn-info btn-sm"
+											title="Alterar o endereço selecionado" type="submit"
+											th:href="@{/endereco/{id}(id=${endereco.id})}" 
+											data-toggle="modal" data-target="#modalEndereco"> 
+											<span class="fa fa-pencil"></span>
+										</a> 
+										<a id="excluiEndereco" class="btn btn-danger btn-sm "
+										title="Excluir o endereço selecionado"
+										th:href="@{/endereco/{id}(id=${endereco.id})}"
+										data-toggle="modal" data-target="#excluirEndereco"> <i
+											class="fa fa-trash"></i>
+									</a> <a id="consultaEndereco" class="btn btn-success btn-sm"
+										title="Consultar dados da pessoa selecionada"
+										th:href="@{/endereco/{id}(id=${endereco.id})}"
+										data-toggle="modal" data-target="#consultarEndereco"><i
+											class="fa fa-search-plus"></i>
+									</a>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+						<button id="newEndereco" class="btn btn-info btn-sm"
+							  title="Cadastrar novo endereço">Novo Endereco
+							  <span class="fa fa-pencil"></span>
+						</button> 
+						<a class="btn btn-success btn-sm"
+							  title="Pesquisa de Pessoa Física"
+							  th:href="@{/pessoa_juridica/listar}">Pesquisar Pessoa Jurídica
+							  <span class="fa fa-search"></span>
+						</a> 
+					</div>
+				</div>
+				<div id="fragEndereco">
+					<div th:replace="crm/fragments/modalEndereco :: modal_endereco"></div> 
+				</div>
+				<div id="fragExclusao">
+					<div th:replace="crm/fragments/excluirEndereco :: excluir_endereco"></div> 
+				</div>
+				<div id="fragConsulta">
+					<div th:replace="crm/fragments/consultarEndereco :: consultar_endereco"></div> 
+				</div>
+			</div>
+        </div> 
+
+		</div>
+	</section>
+	<th:block layout:fragment="javascript-extra">
+
+		<!-- <script th:src="@{/js/handlebars.min.js}"></script> 
+		<script th:src="@{/js/uikit.min.js}"></script>
+		<script th:src="@{/js/upload.min.js}"></script> -->
+<!-- 		<script th:src="@{/js/plugins/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/js/plugins/bootstrap-datepicker.pt-BR.min.js}"></script>
+		<script th:src="@{/js/datatable/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/datatable/dataTables.bootstrap4.min.js}"></script>
+		<script th:src="@{/js/datatable/dataTables.select.min.js}"></script> -->
+<!-- 		<script th:src="@{/js/mascaraDataPicker.js}"></script>
+		<script th:src="@{/js/mascara-cep.js}"></script>
+ -->		<!-- 		<script th:src="@{/js/pessoa.upload-foto.js}"></script> -->
+ 
+ 		<script th:src="@{/js/pesquisa.cidade.js}"></script>
+ 
+
+		<script>
+			$(function() {
+				$("#pesquisarCep").on('click',function() {
+					var cep = $('#cep_endereco').val();
+					$.ajax({
+						method : "GET",
+					    url : "/rest/logradouro/cep/",
+					    data: {
+				        	'cep':cep,
+				        },
+				        datatype: 'json',
+				        contentType: 'application/json; charset=utf-8',
+						success : function(response) {
+							console.log(response),
+							$('#cidade_id').val(response.cidade.id),
+							$('#cidade_endereco').val(response.descricao_cidade),
+							$('#rua_endereco').val(response.descricao),
+							$('#logradouro_id').val(response.id);
+							$('#descricao_sem_numero_endereco').val(response.descricao_sem_numero),
+							$('#complemento_endereco').val(response.complemento),
+							$('#endereco_tipo').val(response.tipo),
+							$('#descricao_bairro').val(response.descricao_bairro),
+							$('#idEndereco').val(response.id)
+						},
+						error : function(jqXHR,textStatus, errorThrown) {
+							alert(jqXHR.status+ ' '+ jqXHR.responseText);
+						}
+				   });
+			   });
+			});
+			
+			$("#newEndereco").on('click', function(event){
+				event.preventDefault();
+		        $('#modalEndereco').modal();
+			});
+			
+			$("#updateEndereco").on('click', function(event){
+			   event.preventDefault();
+			   var href = $(this).attr('href');
+			   $.ajax({
+				   method : "GET",
+				   url : href, 
+				   success : function(response){
+					   	$('#idPessoa').val(response.pessoa.id),
+						$('#idEndereco').val(response.id)
+					    $('#cidade_id').val(response.cidade.id),
+						$('#logradouro_id').val(response.logradouro.id);
+					    $('#cep_endereco').val(response.logradouro.cep)
+					 	$('#cidade_endereco').val(response.cidade.nome),
+						$('#rua_endereco').val(response.logradouro.descricao),
+						$('#numero_endereco').val(response.numero),
+						$('#tipoEndereco').val(response.tipoEndereco),
+						$('#descricao_sem_numero_endereco').val(response.logradouro.descricao_sem_numero),
+						$('#complemento_endereco').val(response.logradouro.complemento),
+						$('#endereco_tipo').val(response.logradouro.tipo),
+						$('#descricao_bairro').val(response.logradouro.descricao_bairro)
+		          },
+			      error : function(jqXHR,textStatus, errorThrown) {
+					  alert(jqXHR.status+ ' '+ jqXHR.responseText);
+				  }
+			   });
+			   $('#modalEndereco').modal();
+			});
+
+			$("#excluiEndereco").on('click', function(event){
+				   event.preventDefault();
+				   var href = $(this).attr('href');
+				   $.ajax({
+					   method : "GET",
+					   url : href, 
+					   success : function(response){
+						    $('#idPessoae').val(response.pessoa.id),
+							$('#idEnderecoe').val(response.id)
+						    $('#cidade_ide').val(response.cidade.id),
+							$('#logradouro_ide').val(response.logradouro.id);
+						    $('#cep_enderecoe').val(response.logradouro.cep)
+						 	$('#cidade_enderecoe').val(response.cidade.nome),
+							$('#rua_enderecoe').val(response.logradouro.descricao),
+							$('#numero_enderecoe').val(response.numero),
+							$('#tipoEnderecoe').val(response.tipoEndereco),
+							$('#descricao_sem_numero_enderecoe').val(response.logradouro.descricao_sem_numero),
+							$('#complemento_enderecoe').val(response.logradouro.complemento),
+							$('#endereco_tipoe').val(response.logradouro.tipo),
+							$('#descricao_bairroe').val(response.logradouro.descricao_bairro)
+				       },
+					   error : function(jqXHR,textStatus, errorThrown) {
+						   alert(jqXHR.status+ ' '+ jqXHR.responseText);
+					   }
+				   });
+				   $('#excluirEndereco').modal();
+		    });
+			$("#consultaEndereco").on('click', function(event){
+				   event.preventDefault();
+				   var href = $(this).attr('href');
+				   $.ajax({
+					   method : "GET",
+					   url : href, 
+					   success : function(response){
+						    $('#idPessoac').val(response.pessoa.id),
+							$('#idEnderecoc').val(response.id)
+						    $('#cidade_idc').val(response.cidade.id),
+							$('#logradouro_idc').val(response.logradouro.id);
+						    $('#cep_enderecoc').val(response.logradouro.cep)
+						 	$('#cidade_enderecoc').val(response.cidade.nome),
+							$('#rua_enderecoc').val(response.logradouro.descricao),
+							$('#numero_enderecoc').val(response.numero),
+							$('#tipoEnderecoc').val(response.tipoEndereco),
+							$('#descricao_sem_numero_enderecoc').val(response.logradouro.descricao_sem_numero),
+							$('#complemento_enderecoc').val(response.logradouro.complemento),
+							$('#endereco_tipoc').val(response.logradouro.tipo),
+							$('#descricao_bairroc').val(response.logradouro.descricao_bairro)
+				       },
+					   error : function(jqXHR,textStatus, errorThrown) {
+							alert(jqXHR.status+ ' '+ jqXHR.responseText);
+					   }
+				   });
+				   $('#consultarEndereco').modal();
+				});
+			
+			   
+			
+			
+		</script>
+	</th:block>
+</body>
+</html>

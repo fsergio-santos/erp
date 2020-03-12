@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section layout:fragment="corpo">
+		<div class="app-title">
+			<div>
+				<h1>
+					<i class="fa fa-lock"></i> Segurança do Sistema
+				</h1>
+			</div>
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+ 			    <li class="breadcrumb-item">Menu</li>
+				<li class="breadcrumb-item"><a th:href="@{/home}">Página Principal</a></li>
+			</ul>
+		</div>
+		<div class="container-fluid">
+
+			<div class="row grid-row">
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Cadastro de Usuários</h5>
+							<a th:href="@{/usuario/listar}">
+								<i class="fa fa-users fa-3x" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Cadastro de Permissões</h5>
+							<a th:href="@{/permissao/listar}">
+							<i class="fa fa-user fa-3x" aria-hidden="true"></i>
+							<i class="fa fa-unlock fa-3x" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Cadastro de Roles</h5>
+							<a th:href="@{/role/listar}">
+								<i class="fa fa-user fa-3x" aria-hidden="true"></i>
+								<i class="fa fa-bars fa-3x" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Cadastro de Escopo</h5>
+							<a th:href="@{/escopo/listar}">
+							<i class="fa fa-user fa-3x" aria-hidden="true"></i>
+							<i class="fa fa-list-alt fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Direitos de Acesso</h5>
+							<a th:href="@{/direitos/listar}"><i class="fa fa-hand-paper-o fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</section>
+</body>
+</html>

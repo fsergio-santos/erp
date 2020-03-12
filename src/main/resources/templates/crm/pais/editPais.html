@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<div class="modal fade" tabindex="-1" role="dialog"
+		id="editarPais" th:fragment="editar_pais">
+
+		<div class="modal-dialog" role="document"
+			style="width: 100%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close"></button>
+					<h4 class="modal-title">Inclusão</h4>
+				</div>
+
+				<form class="form-horizontal" autocomplete="off" >
+					<div class="modal-body">
+						<div class="row">
+							<div id="mensagem"
+								th:replace="fragments/mensagem_usuario :: mensagem_usuario">
+							</div>
+						</div>
+						<h4 class="tile-title">Cadastro de Países</h4>
+						<div class="tile-body">
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+									<div class="form-group">
+										<label for="nomePais" class="control-label"><b>Nome</b></label> <input
+											type="text" id="nome" class="form-control" name="nomePais"/>
+										<div id="erroNomePais" class="invalid-feedback">
+											<span id="showErroNomePais" ></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+									<div class="form-group">
+										<label for="nacionalidadePais" class="control-label"><b>Nacionalidade</b></label> <input
+											type="text" id="nacionalidade" class="form-control" name="nacionalidadePais"/>
+										<div id="erroNacionalidadePais" class="invalid-feedback">
+											<span id="showErroNacionalidadePais"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						<div class="modal-footer">
+							<button id="btnSalvarPais" type="button" class="btn btn-primary" 
+								data-toggle="tooltip"
+								data-placement="top" title="Salvar o cadastro do pais">
+								<b>Salvar</b> <span class="fa fa-fw fa-lg fa-check-circle"
+									aria-hidden="true"></span>
+							</button>
+							<button type="reset" class="btn btn-secondary" 
+								 data-toggle="tooltip"
+								formnovalidate="formnovalidate" data-placement="top"
+								title="Cancelar o cadastro do pais" data-dismiss="modal">
+								<b>Cancelar</b> <span class="fa fa-fw fa-lg fa-times-circle"
+									aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+</body>
+</html>

@@ -1,0 +1,17 @@
+<html lang="pt" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="'layout/LayoutSimples'">
+<head>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<th:block layout:fragment="conteudo">
+	<div class="container">
+			<br />
+			<h1 >Faça o login no sistema</h1>
+			<a class="btn btn-primary" th:href="@{/login}">login</a>
+	</div>
+</th:block>
+</th:block>
+
+</html>

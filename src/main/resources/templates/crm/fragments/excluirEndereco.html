@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/></head>
+<body>
+      
+    <div class="modal fade" tabindex="-1" role="dialog" id="excluirEndereco" th:fragment="excluir_endereco" >
+
+        <div class="modal-dialog modal-xl mw-100 w-75" role="document" style="width:100%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <h4 class="modal-title">Atenção o Cadastro selecionado pode ser apagado.</h4>
+                </div>
+                
+                <form class="form-horizontal" th:object="${pessoa}" method="POST" th:action="@{/pessoa/excluir}" >
+					<div class="modal-body">
+					    <input type="hidden" id="idPessoae" th:field="*{id}" />
+					    <input type="hidden" id="idEnderecoe" th:field="*{endereco.id}" />
+						<div class="tile" >
+									<div class="tile-body">
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+												<div class="form-group">
+													<label for="cep_endereco" class="control-label"><b>CEP</b></label>
+													<div class="input-group">
+														<input type="text" id="cep_enderecoe" class="form-control"
+															name="cep_endereco" th:field="*{endereco.cep}"
+															th:classappend="${#fields.hasErrors('endereco.cep')} ? 'is-invalid'" />
+															<span class="input-group-btn">
+															    <button id="pesquisarCep" class="btn  btn-default  js-tooltip" type="button"
+																	title="Digite o número do cep para pesquisar.">
+																	<i class="fa fa-search"></i>
+																</button>
+															</span>		
+														<div class="invalid-feedback">
+															<span th:errors="*{endereco.cep}"></span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+												<div class="form-group">
+													<label for="cidade_endereco" class="control-label"><b>Cidade</b></label>
+													<input type="text" id="cidade_enderecoe"
+														class="form-control" name="cidade_endereco"> <input
+														type="hidden" id="cidade_id"
+														th:field="*{endereco.cidade}">
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+												<div class="form-group">
+													<label for="rua_endereco" class="control-label"><b>Logradouro</b></label>
+													<input type="text" id="rua_enderecoe" class="form-control"
+														name="rua_endereco" /><input type="hidden" id="logradouro_id"
+														th:field="*{endereco.logradouro}">
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
+												<div class="form-group">
+													<label for="numero_endereco" class="control-label"><b>Número</b></label>
+													<input type="text" id="numero_enderecoe"
+														class="form-control" name="numero_endereco"
+														th:field="*{endereco.numero}"
+														th:classappend="${#fields.hasErrors('endereco.numero')} ? 'is-invalid'" />
+													<div class="invalid-feedback">
+														<span th:errors="*{endereco.numero}"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+												<div class="form-group">
+													<label for="tipoEndereco" class="control-label"><b>Tipo
+															Endereco</b></label> <select id="tipoEnderecoe" class="form-control"
+														th:field="*{endereco.tipoEndereco}">
+														<option value="">Selecione ...</option>
+														<option th:each="tipo : ${tipos}" th:value="${tipo}"
+															th:text="${tipo.descricao}"
+															th:classappend="${#fields.hasErrors('endereco.tipoEndereco')} ? 'is-invalid'">
+														</option>
+													</select>
+													<div class="invalid-feedback">
+														<span th:errors="*{endereco.tipoEndereco}"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+												<div class="form-group">
+													<label for="descricao_sem_numero_endereco"
+														class="control-label"><b>Descrição</b></label> <input
+														type="text" id="descricao_sem_numero_enderecoe"
+														class="form-control" name="descricao_sem_numero_endereco"
+														th:field="*{endereco.descricao_sem_numero}"
+														th:classappend="${#fields.hasErrors('endereco.descricao_sem_numero')} ? 'is-invalid'" />
+													<div class="invalid-feedback">
+														<span th:errors="*{endereco.descricao_sem_numero}"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+												<div class="form-group">
+													<label for="complemento_endereco" class="control-label"><b>Complemento</b></label>
+													<input type="text" id="complemento_enderecoe"
+														class="form-control" name="complemento_endereco"
+														th:field="*{endereco.complemento}"
+														th:classappend="${#fields.hasErrors('endereco.complemento')} ? 'is-invalid'" />
+													<div class="invalid-feedback">
+														<span th:errors="*{endereco.complemento}"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+												<div class="form-group">
+													<label for="endereco_tipo" class="control-label"><b>Tipo
+															Logradouro</b></label> <input type="text" id="endereco_tipoe"
+														class="form-control" name="endereco_tipo"
+														th:field="*{endereco.logradouro.tipo}" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+												<div class="form-group">
+													<label for="descricao_bairro_endereco"
+														class="control-label"><b>Bairro</b></label> <input
+														type="text" id="descricao_bairroe" class="form-control"
+														name="descricao_bairro"
+														th:field="*{endereco.descricao_bairro}"
+														th:classappend="${#fields.hasErrors('endereco.descricao_bairro')} ? 'is-invalid'" />
+													<div class="invalid-feedback">
+														<span th:errors="*{endereco.descricao_bairro}"></span>
+													</div>
+												</div>
+											</div>
+											
+
+										</div>
+
+									</div>
+									</div>       
+       
+                    
+       
+       
+
+                </div>
+					<div class="modal-footer">
+
+
+						<button type="submit" class="btn btn-danger"  data-toggle="tooltip" data-placement="top"
+							title="Excluir o endereço selecionado">
+							<b>Excluir</b> <span class="fa fa-fw fa-lg fa-trash"
+								aria-hidden="true"></span>
+						</button>
+						<button type="submit" class="btn btn-secondary" name="action"
+							value="cancelar" data-toggle="tooltip"
+							formnovalidate="formnovalidate" data-placement="top"
+							title="Cancelar a Exclusão do endereço" data-dismiss="modal">
+							<b>Cancelar</b> <span class="fa fa-fw fa-lg fa-times-circle"
+								aria-hidden="true"></span>
+						</button>
+					</div>
+				</form>
+            </div>    <!-- /.modal-content -->
+        </div>  <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
+</body>
+</html>	

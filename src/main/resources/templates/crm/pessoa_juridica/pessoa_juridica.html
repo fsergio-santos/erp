@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section layout:fragment="corpo">
+		<div class="app-title">
+			<div>
+				<h1>
+					<i class="fa fa-edit"></i>Cadastro de Pessoas Jurídica 
+
+				</h1>
+			</div>
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><i class="fa fa-search fa-lg"></i></li>
+				<li class="breadcrumb-item"><a
+					th:href="@{/pessoa_juridica/listar}">Pesquisa Pessoa Jurídica</a></li>
+			</ul>
+		</div>
+		<div class="container-fluid">
+			<div class="bs-component">
+				<form class="form-horizontal" th:object="${pessoa}" method="POST"
+					th:action="@{/pessoa_juridica/salvar}" autocomplete="off">
+					<input type="hidden" id="idPessoa" th:field="*{id}" />
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+						    <div th:replace="fragments/validacao :: validacao"></div> 
+							<div th:replace="fragments/alert"></div>
+						</div>
+					</div>
+
+					<div class="tile">
+						<h4 class="tile-title">Dados da Empresa</h4>
+						<div class="tile-body">
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+									<div class="form-group">
+									    <label for="nome" class="control-label"><b>Nome</b></label>
+										<div class="input-group ">
+											<span class="input-group-prepend"> <i
+												class="input-group-text fa fa-user fa-lg" ></i>
+											</span> 
+											<input type="text" id="nome" class="form-control" name="nome"
+												th:field="*{nome}"
+												th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid'" />
+												
+											<div class="invalid-feedback">
+												<span th:errors="*{nome}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+									<div class="form-group">
+									    <label for="nomeFantasia" class="control-label"><b>Nome Fantasia</b></label>
+										<div class="input-group ">
+											<span class="input-group-prepend"> <i
+												class="input-group-text fa fa-user fa-lg" ></i>
+											</span> 
+											<input type="text" id="nomeFantasia" class="form-control" name="nomeFantasia"
+												th:field="*{nomeFantasia}"
+												th:classappend="${#fields.hasErrors('nomeFantasia')} ? 'is-invalid'" />
+											<div class="invalid-feedback">
+												<span th:errors="*{nomeFantasia}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="cnpj" class="control-label"><b>CNPJ</b></label> <input
+											type="text" id="cnpj" class="form-control" name="cnpj"
+											th:field="*{cnpj}"
+											th:classappend="${#fields.hasErrors('cnpj')} ? 'is-invalid'"
+											data-mask="99.999.999/9999-99" />
+										<div class="invalid-feedback">
+											<span th:errors="*{cnpj}"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="inscricaoEstadual" class="control-label"><b>Inscrição Estadual</b></label> <input
+											type="text" id="inscricaoEstadual" class="form-control" name="inscricaoEstadual"
+											th:field="*{inscricaoEstadual}"
+											th:classappend="${#fields.hasErrors('inscricaoEstadual')} ? 'is-invalid'" />
+										<div class="invalid-feedback">
+											<span th:errors="*{inscricaoEstadual}"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="inscricaoMunicipal" class="control-label"><b>Inscrição Municipal</b></label> 
+										<input type="text" id="inscricaoMunicipal"
+											class="form-control" name="inscricaoMunicipal"
+											th:field="*{inscricaoMunicipal}"
+											th:classappend="${#fields.hasErrors('inscricaoMunicipal')} ? 'is-invalid'" />
+										<div class="invalid-feedback">
+											<span th:errors="*{inscricaoMunicipal}"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="naturezaJuridica" class="control-label"><b>Natureza Jurídica</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-list fa-lg" aria-hidden="true"></span>
+											</span> <select id="naturezaJuridica" class="form-control"
+												th:field="*{naturezaJuridica}">
+												<option value="">Selecione ...</option>
+												<option th:each="naturezaJuridica : ${naturezaJuridicas}"
+													th:value="${naturezaJuridica}"
+													th:text="${naturezaJuridica.descricao}"
+													th:classappend="${#fields.hasErrors('naturezaJuridica')} ? 'is-invalid'">
+												</option>
+											</select>
+											<div class="invalid-feedback">
+												<span th:errors="*{tipoPessoaJuridica}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+									<div class="form-group">
+										<label for="ramoNegocio" class="control-label"><b>Ramo de Negócio</b></label> 
+										<input type="text" id="ramoNegocio" class="form-control"
+											name="ramoNegocio" th:field="*{ramoNegocio}"
+											th:classappend="${#fields.hasErrors('ramoNegocio')} ? 'is-invalid'" />
+										<div class="invalid-feedback">
+											<span th:errors="*{ramoNegocio}"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+									<div class="form-group">
+										<label for="formaPessoaJuridica" class="control-label"><b>Forma Pessoa Jurídica</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-list fa-lg" aria-hidden="true"></span>
+											</span> <select id="formaPessoaJuridica" class="form-control"
+												th:field="*{formaPessoaJuridica}">
+												<option value="">Selecione ...</option>
+												<option th:each="formaPessoaJuridica : ${formaPessoaJuridicas}"
+													th:value="${formaPessoaJuridica}"
+													th:text="${formaPessoaJuridica.descricao}"
+													th:classappend="${#fields.hasErrors('formaPessoaJuridica')} ? 'is-invalid'">
+												</option>
+											</select>
+											<div class="invalid-feedback">
+												<span th:errors="*{formaPessoaJuridica}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="dataAbertura" class="control-label"><b>Data
+												de Abertura</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-calendar fa-lg" aria-hidden="true"></span>
+											</span> <input type="text" id="dataAbertura"
+												class="form-control js-data" name="dataAbertura"
+												th:field="*{dataAbertura}"
+												th:classappend="${#fields.hasErrors('dataAbertura')} ? 'is-invalid'" />
+											<div class="invalid-feedback">
+												<span th:errors="*{dataAbertura}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="porteEmpresa" class="control-label"><b>Porte da Empresa</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-list fa-lg" aria-hidden="true"></span>
+											</span> <select id="porteEmpresa" class="form-control"
+												th:field="*{porteEmpresa}">
+												<option value="">Selecione ...</option>
+												<option th:each="porteEmpresa : ${porteEmpresas}"
+													th:value="${porteEmpresa}"
+													th:text="${porteEmpresa.descricao}"
+													th:classappend="${#fields.hasErrors('porteEmpresa')} ? 'is-invalid'">
+												</option>
+											</select>
+											<div class="invalid-feedback">
+												<span th:errors="*{porteEmpresa}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+									<div class="form-group">
+										<label for="email" class="control-label"><b>E-mail</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-envelope-o fa-lg" aria-hidden="true"></span>
+											</span> <input type="email" id="email" class="form-control"
+												name="email" th:field="*{email}"
+												th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" />
+											<div id="erroEmail" class="invalid-feedback">
+												<span id="showErroEmail" th:errors="*{email}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="tipodePessoa" class="control-label"><b>Tipo de Pessoa Jurídica</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-list fa-lg" aria-hidden="true"></span>
+											</span> <select id="tipodePessoa" class="form-control"
+												th:field="*{tipodePessoa}">
+												<option value="">Selecione ...</option>
+												<option th:each="tipodePessoa : ${tipodePessoas}"
+													th:value="${tipodePessoa}"
+													th:text="${tipodePessoa.descricao}"
+													th:classappend="${#fields.hasErrors('tipodePessoa')} ? 'is-invalid'">
+												</option>
+											</select>
+											<div class="invalid-feedback">
+												<span th:errors="*{tipodePessoa}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="tipoPessoa" class="control-label"><b>Tipo de Relacionamento</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-list fa-lg" aria-hidden="true"></span>
+											</span> <select id="tipoPessoa" class="form-control"
+												th:field="*{tipoPessoa}">
+												<option value="">Selecione ...</option>
+												<option th:each="tipoPessoa : ${tipoPessoas}"
+													th:value="${tipoPessoa}"
+													th:text="${tipoPessoa.descricao}"
+													th:classappend="${#fields.hasErrors('tipoPessoa')} ? 'is-invalid'">
+												</option>
+											</select>
+											<div class="invalid-feedback">
+												<span th:errors="*{tipoPessoa}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tile-footer">
+								<div class="col-lg-offset-2 col-md-offset-2">
+									<button type="submit" class="btn btn-primary " name="action"
+										value="cadastrardadospessoais" data-toggle="tooltip"
+										data-placement="top" title="Salvar o cadastro">
+										<b>Salvar</b> <span class="fa fa-fw fa-lg fa-check-circle"
+											aria-hidden="true"></span>
+									</button>
+
+									<button type="submit" class="btn btn-secondary " name="action"
+										value="cancelar" data-toggle="tooltip"
+										formnovalidate="formnovalidate" data-placement="top"
++										title="Cancelar o cadastro">
+										<b>Cancelar</b> <span class="fa fa-fw fa-lg fa-times-circle"
+											aria-hidden="true"></span>
+									</button>
+ 									<th:block th:if="${pessoa.id} != null">
+										<a  class="btn btn-success" data-toggle="tooltip"
+											data-placement="top"
+											th:href="@{/pessoa_juridica/enderecos/{id}(id=${pessoa.id})}"
+											title="Cadastrar novo endereço"> <b>Cadastrar
+												Endereços</b> <span class="fa fa-fw fa-lg" aria-hidden="true"></span>
+										</a>
+									</th:block>
+									<th:block th:if="${pessoa.id} != null">
+										<a  class="btn btn-warning" data-toggle="tooltip"
+											data-placement="top"
+											th:href="@{/pessoa_juridica/contatos/{id}(id=${pessoa.id})}"
+											title="Cadastrar novo endereço"> <b>Cadastrar
+												Contatos</b> <span class="fa fa-fw fa-lg" aria-hidden="true"></span>
+										</a>
+									</th:block>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<th:block th:replace="crm/cidade/PesquisaCidade :: pesquisaCidade"></th:block>
+					<th:block th:replace="crm/pais/editPais :: editar_pais"></th:block>
+
+				</form>
+			</div>
+		</div>
+
+	</section>
+	<th:block layout:fragment="javascript-extra">
+
+		<script th:src="@{/js/plugins/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/js/plugins/bootstrap-datepicker.pt-BR.min.js}"></script>
+		<script th:src="@{/js/datatable/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/datatable/dataTables.bootstrap4.min.js}"></script>
+		<script th:src="@{/js/datatable/dataTables.select.min.js}"></script>
+		<script th:src="@{/js/mascaraDataPicker.js}"></script>
+		<script th:src="@{/js/pesquisa.cidade.js}"></script>
+
+		<script>
+		    $(document).ready(function(){
+		    	
+		    	var nomePais = $("#nomePais");
+		    	var erroNomePais = $("#erroNomePais");
+		    	var showErroNomePais = $("#showErroNomePais");
+		    	
+		    	var nacionalidadePais = $("#nacionalidadePais");
+		    	var erroNacionalidadePais = $("#erroNacionalidadePais");
+		    	var showErroNacionalidadePais = $("#showErroNacionalidadePais");
+		    	
+		    	var email = $("#email");
+		    	var erroEmail = $("#erroEmail");
+		    	var showErroEmail = $("#showErroEmail");
+		    	
+		    	nomePais.blur(function(){
+		    		if ($.trim(nomePais.val()).length == 0) {
+		    			nomePais.addClass('is-invalid');
+		    			erroNomePais.addClass('invalid-feedback');
+		    			showErroNomePais.html("O nome do país deve ser informado.").show();
+		    			nomePais.focus();
+		    		}else {
+		    			nomePais.removeClass('is-invalid');
+		    			erroNomePais.removeClass('invalid-feedback');
+		    			showErroNomePais.html('').hide();
+		    		}
+		    	});
+		    	
+		    	nacionalidadePais.blur(function(){
+		    		if ($.trim(nacionalidadePais.val()).length == 0) {
+		    			nacionalidadePais.addClass('is-invalid');
+		    			erroNacionalidadePais.addClass('invalid-feedback');
+		    			showErroNacionalidadePais.html("A nacionalidade do país deve ser informada.").show();
+		    			nacionalidadePais.focus();
+		    		}else {
+		    			nacionalidadePais.removeClass('is-invalid');
+		    			erroNacionalidadePais.removeClass('invalid-feedback');
+		    			showErroNacionalidadePais.html('').hide();
+		    		}
+		    	});
+		    	
+		    	email.blur(function() {
+					if ($.trim(email.val()).length == 0) {
+						email.addClass('is-invalid');
+						erroEmail.addClass('invalid-feedback');
+						showErroEmail.html("Digite um endereço de E-mail válido.").show();
+						email.focus();
+						return false;
+					}
+					if (IsEmail(email) == false) {
+						email.addClass('is-invalid');
+						erroEmail.addClass('invalid-feedback');
+						showErroEmail.html("Digite um endereço de E-mail válido.").show();
+						email.focus()
+						return false;
+					}
+					showErroEmail.html('').hide();
+					erroEmail.removeClass('invalid-feedback');
+					email.removeClass("is-invalid");
+
+				});
+		    	
+		    	$(function(){
+		    		var idcidade = $('#codigoCidade').val();
+		    		if ( $.trim(idcidade).length != 0 ){
+						var url="/rest/cidade/buscar_nome_cidade";
+						$.ajax({
+					        url: url,
+					        type: 'GET',
+					        data: {
+					        	'id':idcidade,
+					        },
+					        datatype: 'json',
+					        contentType: 'application/json; charset=utf-8',
+					        success: function(data) {
+				                $('#nomeEstado').val(data.mensagem);
+				                $('#codigoCidade').val(data.id);
+					        },	
+					        error: function(xhr, status, error) {
+					            alert(xhr.responseText);
+					        },
+						
+						});
+		    		} 	
+		    	});
+		    	
+		    	$(function(){
+		    		var idPais = $('#pais').val();
+		    		if ( $.trim(idPais).length != 0 ){
+			    		var url = "/rest/pais";
+						$.ajax({
+						  method : "GET",
+						  url : url,
+						  data:{
+							  'id':idPais,
+						  },
+						  datatype: 'json',
+					      contentType: 'application/json; charset=utf-8',
+						  success : function(response){
+							  $('#nacionalidade').val(response.nacionalidade);
+						  },
+						  error : function(jqXHR,textStatus, errorThrown) {
+								alert(jqXHR.status+ ' '+ jqXHR.responseText);
+						  }
+					   });
+		    		}	
+		    	});
+		    	
+		    	$("#editarPais").find("#btnSalvarPais").on('click', function(event){
+		    		event.preventDefault();
+		    		var pais = {
+		    			'nome': $("#nomePais").val(),
+		    		    'nacionalidade' : $("#nacionalidadePais").val()
+		    		};
+		    		$.ajax({
+		    			url: '/rest/pais/salvar',
+		    			method : 'POST',
+		    			contentType: 'application/json; charset=utf-8',
+		    			data : JSON.stringify(pais),
+		    			dataType: 'JSON',
+		    		    success: function(data){
+		    		        $('#pais').append('<option value=' + data.id + '>' + data.nome + '</option>');
+ 		    				$('#editarPais').modal('hide');
+		    		    },
+		    		    error : function(jqXHR,textStatus, errorThrown) {
+							alert(jqXHR.status+ ' '+ jqXHR.responseText);
+					    }
+		    		});
+		    	});
+		    	
+		    	
+		    	
+		    });
+		    
+			$('#pais').on('change',function(){
+	 		   var idPais = $('#pais').val();
+	 		   var url = "/rest/pais";
+			   $.ajax({
+				  method : "GET",
+				  url : url,
+				  data:{
+					  'id':idPais,
+				  },
+				  datatype: 'json',
+				  contentType: 'application/json; charset=utf-8',
+				  success : function(response){
+					  $('#nacionalidade').val(response.nacionalidade);
+				  },
+				  error : function(jqXHR,textStatus, errorThrown) {
+						alert(jqXHR.status+ ' '+ jqXHR.responseText);
+				  }
+			   });	
+ 			});
+			
+			$('#nomeCidade').on('change', function(){
+				var idcidade = $('#codigoCidade').val();
+				var url="/rest/cidade/buscar_nome_cidade";
+				$.ajax({
+			        url: url,
+			        type: 'GET',
+			        data: {
+			        	'id':idcidade,
+			        },
+			        datatype: 'json',
+			        contentType: 'application/json; charset=utf-8',
+			        success: function(data) {
+		                $('#nomeEstado').val(data.mensagem);
+		                $('#codigoCidade').val(data.id);
+			        },	
+			        error: function(xhr, status, error) {
+			            alert(xhr.responseText);
+			        },
+				
+				});
+			});
+			
+			$("#cpf").on('change', function(evento) {
+				var cpf = $("#cpf").val();
+				var url="/rest/pessoa_juridica/buscar_cgc_pessoa_juridica";
+				$.ajax({
+			        url: url,
+			        type: 'GET',
+			        data: {
+			        	'cpf':cpf,
+			        },
+			        datatype: 'json',
+			        contentType: 'application/json; charset=utf-8',
+			        success: function(data) {
+			        	if (data.id=="201"){
+			         		$("#cpfError").show().html(data.mensagem);
+			        		$("#cpf").addClass('is-invalid')
+			        		$("#cpf").focus();
+			        	} else {
+			        		$("#cpfError").html('').hide();
+			        		$("#cpf").removeClass('is-invalid');
+			        	}
+			        },	
+			        error: function(xhr, status, error) {
+			            alert(xhr.responseText);
+			        },
+			    });
+				
+			});
+			
+			$("#novoPais").on('click', function(event){
+				event.preventDefault();
+			    $('#editarPais').modal();
+			});
+			
+			
+			
+			
+		</script>
+	</th:block>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/></head>
+<body>
+      
+    <div class="modal fade" tabindex="-1" role="dialog" id="editarContatoPessoa" th:fragment="editar_contato" >
+
+        <div class="modal-dialog modal-xl mw-100 w-75" role="document" style="width:100%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <h4 class="modal-title">Inclusão / Ateração do Cadastro</h4>
+                </div>
+                
+                <form class="form-horizontal" th:object="${pessoa}" 
+                							  method="POST" autocomplete="off"
+                							  th:action="@{/pessoa_fisica/salvar}">
+					<div class="modal-body">
+                    <input type="hidden" id="idPessoa" th:field="*{id}" />
+					<input type="hidden" id="idContato" th:field="*{telefone.id}" />
+					<input type="hidden" th:field="*{nome}" />
+		    		<input type="hidden" th:field="*{tipoPessoa}" />
+		        	<input type="hidden" th:field="*{email}" />
+		        	<input type="hidden" th:field="*{dataCadastro}" />
+		        	<input type="hidden" th:field="*{telefoneCadastrado}" />
+		        	<input type="hidden" th:field="*{enderecoCadastrado}" />
+		        		
+					<div class="row">
+						<div id="mensagem"
+							th:replace="fragments/mensagem_usuario :: mensagem_usuario">
+						</div>
+					</div>
+					<h4 class="tile-title">Cadastro de Contatos</h4>
+					<div class="tile-body">
+						<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="tipo_telefone" class="control-label"><b>Tipo
+												Telefone</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-list fa-lg" aria-hidden="true"></span>
+											</span> <select id="tipo_telefone" class="form-control"
+												th:field="*{telefone.tipoTelefone}">
+												<option value="">Selecione ...</option>
+												<option th:each="tipoTelefone : ${tiposTelefone}"
+													th:value="${tipoTelefone}"
+													th:text="${tipoTelefone.descricao}"
+													th:classappend="${#fields.hasErrors('telefone.tipoTelefone')} ? 'is-invalid'">
+												</option>
+											</select>
+
+											<div class="invalid-feedback">
+												<span th:errors="*{telefone.tipoTelefone}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="modelo_telefone" class="control-label"><b>Tipo
+												Telefone</b></label>
+										<div class="input-group">
+											<span class="input-group-prepend"> <span
+												class="input-group-text fa fa-list fa-lg" aria-hidden="true"></span>
+											</span> <select id="modelo_telefone" class="form-control"
+												th:field="*{telefone.modeloTelefone}">
+												<option value="">Selecione ...</option>
+												<option th:each="modeloTelefone : ${modelosTelefone}"
+													th:value="${modeloTelefone}"
+													th:text="${modeloTelefone.descricao}"
+													th:classappend="${#fields.hasErrors('telefone.modeloTelefone')} ? 'is-invalid'">
+												</option>
+											</select>
+											<div class="invalid-feedback">
+												<span th:errors="*{telefone.modeloTelefone}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+									<div class="form-group">
+										<label for="numero_telefone" class="control-label"><b>Número
+												Telefone</b></label> <input type="text" id="numero_telefone"
+											class="form-control js-numeroTelefone" name="numero_telefone"
+											th:field="*{telefone.numeroTelefone}"
+											th:classappend="${#fields.hasErrors('telefone.numeroTelefone')} ? 'is-invalid'" />
+										<div class="invalid-feedback">
+											<span th:errors="*{telefone.numeroTelefone}"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" name="action"
+							value="cadastrardadoscontato" data-toggle="tooltip" data-placement="top"
+							title="Salvar o endereço selecionado">
+							<b>Salvar</b> <span class="fa fa-fw fa-lg fa-check-circle"
+								aria-hidden="true"></span>
+						</button>
+						<button type="submit" class="btn btn-secondary" name="action"
+							value="cancelar" data-toggle="tooltip"
+							formnovalidate="formnovalidate" data-placement="top"
+							title="Cancelar o cadastro do endereço" data-dismiss="modal">
+							<b>Cancelar</b> <span class="fa fa-fw fa-lg fa-times-circle"
+								aria-hidden="true"></span>
+						</button>
+					</div>
+					</div>
+				</form>
+            </div>    <!-- /.modal-content -->
+        </div>  <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
+</body>
+</html>	

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section layout:fragment="corpo">
+		<div class="app-title">
+			<div>
+				<h1>
+					<i class="fa fa-dashboard"></i> Página Principal
+				</h1>
+			</div>
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+				<li class="breadcrumb-item"><a th:href="@{/home}">Menu</a></li>
+			</ul>
+		</div>
+		<div class="container-fluid">
+
+			<div class="row grid-row">
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+					<div class="widget-small primary">
+						<i class="icon fa fa-users fa-3x"></i>
+						<div class="info">
+							<h4>Faturamento</h4>
+							<p>
+								<b>R$ 150.000,00</b>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+					<div class="widget-small info">
+						<i class="icon fa fa-thumbs-o-up fa-3x"></i>
+						<div class="info">
+							<h4>Contas a Receber</h4>
+							<p>
+								<b>R$ 250.000,00</b>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+					<div class="widget-small warning">
+						<i class="icon fa fa-files-o fa-3x"></i>
+						<div class="info">
+							<h4>Contas a Pagar</h4>
+							<p>
+								<b>R$ 100.000,00</b>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Configurações</h5>
+							<a href="#">
+								<i class="fa fa-cog fa-3x" aria-hidden="true"></i>
+								<i class="fa fa-cog fa-3x" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Auditoria</h5>
+							<a href="#"><i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Clientes</h5>
+							<a th:href="@{/crm}"><i class="fa fa-users fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Recursos Humanos</h5>
+							<a href="#">
+								<i class="fa fa-male fa-3x" aria-hidden="true"></i>
+							    <i class="fa fa-female fa-3x" aria-hidden="true"></i> 
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Financeiro</h5>
+							<a href="#">
+								<i class="fa fa-line-chart fa-3x" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Contabilidade</h5>
+							<a href="#"><i class="fa fa-money fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Estoque/Custo</h5>
+							<a href="#">
+								<i class="fa fa-cubes fa-3x" aria-hidden="true"></i>
+								<i class="fa fa-money fa-3x" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Patrimônio</h5>
+							<a href="#"><i class="fa fa-building fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 ol-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Fiscal</h5>
+							<a href="#">
+								<i class="fa fa-area-chart fa-3x" aria-hidden="true"></i>
+								<i class="fa fa-money fa-3x" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Caixa</h5>
+							<a href="#"><i class="fa fa-university fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Jurídico</h5>
+							<a href="#"><i class="fa fa-balance-scale fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Faturamento</h5>
+							<a href="#"><i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+			    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+					<div class="card text-center">
+						<div class="card-body">
+							<h5 class="card-title">Segurança</h5>
+							<a th:href="@{/seguranca}"><i class="fa fa-lock fa-3x" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

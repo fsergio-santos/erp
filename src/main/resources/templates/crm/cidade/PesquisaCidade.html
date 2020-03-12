@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<div class="modal  fade" id="pesquisarCidade" tabindex="-1" role="dialog" th:fragment="pesquisaCidade">
+ 	<div class="modal-dialog modal-lg">
+   		<div class="modal-content">
+   			<div class="modal-header">
+   			    <h4 class="modal-title">Pesquisa de Cidades</h4>
+       			<button type="button" class="close" data-dismiss="modal"><i>&times;</i></button>
+      		</div>
+      		
+   			<div class="modal-body">
+   				<div id="mensagem-erro" class="alert  alert-danger  alert-dismissible"  role="alert">
+					<button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true">&times;</span></button>
+					<div><i class="fa  fa-exclamation-circle"></i>Informe pelo menos 3 letras na pesquisa</div>
+				</div>
+   			    <div class="row">
+	   				<form class="form-inline" role="form">
+	   				    <div class="col-sm-8">
+				        	<div class="form-group">
+				            	<label class="control-label" for="nomeCidadeModal">Nome</label>
+			                	<input id="nomeCidadeModal" type="text" class="form-control" autofocus="autofocus"/>
+				            </div>
+			            </div>
+			            <div class="col-sm-2">
+			               <div class="form-group">
+			                 <label class="control-label" for="nomeCidadeModal">&nbsp;</label> 
+					         <button type="submit" class="btn  btn-primary js-pesquisa-rapida-cidades-btn form-control">Pesquisar</button>
+					       </div>  
+			            </div>
+			            <div class="col-sm-2">
+			               <div class="form-group">
+					         <label class="control-label" for="nomeCidadeModal">&nbsp;</label>
+					         <a href="#" class="btn btn-secondary form-control" data-dismiss="modal">Cancelar</a>
+					       </div>  
+			            </div>	
+			        </form>
+		        </div>
+                <div class="col-sm-12" id="tabela_cidade">
+			          <div class="tile">
+                          <div class="tile-body">      
+			                  <th:block th:replace="crm/cidade/TabelaPesquisaCidade :: tabela-pesquisa-cidade"></th:block>
+			              </div>    
+	                </div>
+                </div>
+		        
+     		</div>
+   		</div>
+ 	</div>
+ 	
+
+</div>
+	
+</html>

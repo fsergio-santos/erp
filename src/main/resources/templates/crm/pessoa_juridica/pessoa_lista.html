@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:erp="http://brewer.algaworks.com" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap-switch.min.css}">
+<link rel="stylesheet" th:href="@{/css/upload.min.css}" />
+<!-- <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" /> -->
+<!-- <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap4.min.css}" /> -->
+</head>
+<body>
+	<section layout:fragment="corpo">
+		<div class="app-title">
+			<div>
+				<h1>
+					<i class="fa fa-edit"></i>Cadastro de Pessoa Física
+				</h1>
+			</div>
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><i class="fa fa-search fa-lg"></i></li>
+				<li class="breadcrumb-item"><a th:href="@{/crm}">Menu</a></li>
+			</ul>
+		</div>
+		<div class="container-fluid">
+			<div class="bs-component">
+			    <div class="tile">
+			         <i class="fa fa-search-plus"></i><span></span>
+			         <button class="btn btn-primary" type="button" data-toggle="collapse" 
+			                 data-target="#collapseNome" aria-controls="collapseNome" data-tooltip="tooltip"
+							 data-placement="top" title="Pesquisar pelo nome da Pessoa">Nome
+			         </button>
+			         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseCNPJ"
+			                 aria-controls="collapseCPF" data-tooltip="tooltip"
+							 data-placement="top" title="Pesquisar pelo cnpj da Pessoa">CNPJ
+			         </button>
+		    	</div>
+				<div class="collapse" id="collapseNome">
+					<div class="tile">
+						<form class="form-inline" role="form" method="GET"
+							th:object="${pessoaJuridicaFiltro}">
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label for="pessoaName" class="control-label col-sm-1">Nome:</label>
+									<input type="text" class="form-control col-sm-8" id="pessoaName"
+										name="pessoaName" th:field="*{nome}"
+										placeholder="Digite o nome para pesquisar.">
+									<div class="col-md-1">
+										<button type="submit" class="btn btn-primary">
+											Pesquisar<i class="fa fa-search-plus"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="collapse" id="collapseCNPJ">
+					<div class="tile">
+						<form class="form-inline" role="form" method="GET"
+							th:object="${pessoaJuridicaFiltro}">
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label for="pessoaCnpj" class="control-label col-sm-1">CPF:</label>
+									<input type="text" class="form-control col-sm-8" id="pessoaCnpj"
+										   name="pessoaCnpj" th:field="*{cnpj}"
+										placeholder="Digite o número do cnpj para pesquisar.">
+									<div class="col-md-1">
+										<button type="submit" class="btn btn-primary">
+											Pesquisar<i class="fa fa-search-plus"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="tile">
+				    <div class="row">
+					   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+						  <div th:replace="fragments/alert"></div>
+					   </div>
+					</div>
+					<h4 class="tile-title">Pessoas Cadastradas</h4>
+					<div class="tile-body">
+						<div id="no-more-tables">
+						    <div class="form-group row"> 
+							    <label for="pageSizeSelect" class="col-sm-2 col-form-label"><b>Quantidade de Registros:</b></label>
+								<div class="col-md-1">
+									<select class="form-control pagination" id="pageSizeSelect">
+										<option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+											th:value="${pageSize}"
+											th:selected="${pageSize} == ${size}"></option>
+									</select>
+								</div>
+							</div>
+							<table id="tabelaPessoa"
+								class="table col-sm-12 table-striped table-bordered table-hover table-collapse cf">
+								<thead class="cf">
+									<tr>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Id</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Nome</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Email</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Tipo
+											Pessoa</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Dados
+											Empresáriais</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Endereços</th>
+										<th class="p-3 mb-2 bg-primary text-white"
+											style="font-weight: bold; text-align: center;">Contatos</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="pessoa :${pagina.conteudo}">
+										<td data-title="Id" class="text-center" th:text="${pessoa.id}"></td>
+										<td data-title="Nome" class="text-center"
+											th:text="${pessoa.nome}"></td>
+										<td data-title="Email" style="text-align: center;"
+											th:text="${pessoa.email}"></td>
+										<td data-title="Tipo Pessoa" class="text-center"
+											th:text="${pessoa.tipoPessoa}"></td>
+										<td data-title="Dados Pessoais" class="text-center"><a
+											class="btn btn-info btn-sm"
+											title="Alterar dados pessoais" type="submit"
+											th:href="@{/pessoa_juridica/alterar_cadastro/{id}(id=${pessoa.id})}">
+												<span class="fa fa-pencil"></span>
+										</a> <a class="btn btn-danger btn-sm "
+											title="Excluir dados pessoais"
+											th:href="@{/pessoa_juridica/excluir_cadastro/{id}(id=${pessoa.id})}"> <i
+												class="fa fa-trash"></i>
+										</a> <a class="btn btn-success btn-sm"
+											title="Consultar dados pessoais"
+											th:href="@{/pessoa_juridica/consultar_cadastro/{id}(id=${pessoa.id})}"><i
+												class="fa fa-search-plus"></i> </a></td>
+										<td data-title="Endereços" class="text-center"><a
+											class="btn btn-success btn-sm"
+											title="Cadastro de Endereços da pessoa selecionada"
+											th:href="@{/pessoa_juridica/enderecos/{id}(id=${pessoa.id})}">
+												<i class="fa fa-search-plus"></i>
+										</a></td>
+										<td data-title="Contatos" class="text-center"><a
+											class="btn btn-success btn-sm"
+											title="Cadastro de Contatos da pessoa selecionada"
+											th:href="@{/pessoa_juridica/contatos/{id}(id=${pessoa.id})}">
+												<i class="fa fa-search-plus"></i>
+										</a></td>
+									</tr>
+
+								</tbody>
+							</table>
+
+						</div>
+						<div class="box-footer clearfix">
+							<erp:pagination size="${size}" page="${pagina}" />
+						</div>
+					</div>
+					<a class="btn btn-info btn-sm"
+						title="Cadastrar Pessoa Jurídica"
+						th:href="@{/pessoa_juridica/novo_cadastro}">
+						Nova Pessoa <span class="fa fa-pencil"></span>
+					</a>
+				</div>
+
+			</div>
+
+
+		</div>
+	</section>
+	<th:block layout:fragment="javascript-extra">
+      	<script>
+			$(document).ready(function() {
+				changePageAndSize();
+			});
+			function changePageAndSize() {
+				$('#pageSizeSelect').change(function(evt) {
+					window.location.replace("/pessoa_juridica/listar?size=" + this.value + "&page=0");
+				});
+			}
+		</script>
+	</th:block>
+</body>
+</html>
