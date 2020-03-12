@@ -13,6 +13,7 @@ public class SpringMailConfig {
 	/*@Autowired
 	private Environment env;*/
 	
+	
 	@Bean
 	public JavaMailSender mailSender() {
 		
